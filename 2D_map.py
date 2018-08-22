@@ -1,8 +1,8 @@
-from RobotController import RobotController as robot
-import time
+from RobotController import RobotController
+# import time
 
 
-def create2DMap(myRobot):
+def create2DMap(robot):
     STEP = 1
 
     time = 0
@@ -11,13 +11,13 @@ def create2DMap(myRobot):
 
     for i in range(5):
         time.sleep(STEP)
-        distance = str(myRobot.getIRDistance())
+        distance = str(robot.getIRDistance())
 
         time.sleep(STEP)
-        myRobot.motorRun("left")
+        robot.motorRun("left")
 
         time.sleep(STEP)
-        myRobot.motorStop()
+        robot.motorStop()
 
         time.sleep(STEP)
 
@@ -30,7 +30,7 @@ def create2DMap(myRobot):
     return list_2D_map
 
 
-def findRobot(info):
+def find_robot(info):
 
     angle_time = 0
     min_distance = 10000
@@ -44,8 +44,8 @@ def findRobot(info):
 
 
 def main():
-    myRobot = robot('/dev/ttyS1')
-    time, distance = findRobot(create2DMap(myRobot))
+    myRobot = RobotController('/dev/ttyS1')
+    time, distance = find_robot(create2DMap(myRobot))
 
 if __name__ == "__main__":
     main()

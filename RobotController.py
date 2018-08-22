@@ -1,6 +1,7 @@
-import Constants as CONST
 from HexMaestro import HexMaestro as maestro
 from UARTMan import UARTMan as uart
+
+import Constants as CONST
 
 
 class RobotController:
@@ -112,6 +113,9 @@ class RobotController:
         req = req.getPackedByteString()
         self.__UARTConnection.send(req)
 
+
+    # -----------------------------------------------------
+
     class Motor:
         # def __init__(self):
         #     self.req = ""
@@ -175,12 +179,11 @@ class RobotController:
             req = CONST.MOTOR['STOP']
             self.__UARTConnection.send(req)
 
-
     class IR:
         # def __init__(self):
         #     pass
 
-        def getDistance(self):
+        def get_distance(self):
             req = CONST.REQUEST['GET_IR_DISTANCE']
             self.__UARTConnection.send(req)
             receive = self.__UARTConnection.receive()
@@ -204,7 +207,7 @@ class RobotController:
                 req = CONST.COMMAND['LED_OFF']
             self.__UARTConnection.send(req)
 
-        def softBlink(self, red=0, green=255, blue=0, number=2, duration=10):
+        def soft_blink(self, red=0, green=255, blue=0, number=2, duration=10):
             req = CONST.COMMAND['LED_SOFT_BLINK']
             req = maestro(req)
             req.setArg('int', 2, red)  #
@@ -214,4 +217,3 @@ class RobotController:
             req.setArg('int', 4, duration)
             req = req.getPackedByteString()
             self.__UARTConnection.send(req)
-
