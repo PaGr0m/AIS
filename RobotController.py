@@ -9,9 +9,9 @@ class RobotController:
         self.__UARTConnection = uart(name)
         self.__UARTConnection.open()
 
-        self.motor = self.Motor()
-        self.ir = self.IR()
-        self.lef = self.LED()
+        self.motor = self.Motor(name)
+        self.ir = self.IR(name)
+        self.led = self.LED(name)
 
     def __del__(self):
         self.__UARTConnection.close()
@@ -113,12 +113,14 @@ class RobotController:
         req = req.getPackedByteString()
         self.__UARTConnection.send(req)
 
-
     # -----------------------------------------------------
 
     class Motor:
-        # def __init__(self):
-        #     self.req = ""
+        def __init__(self, name):
+            self.req = ""
+            self.__UARTConnection = uart(name)
+            self.__UARTConnection.open()
+
         #
         # def run(self):
         #     self.__UARTConnection.send(self.req)
@@ -180,8 +182,10 @@ class RobotController:
             self.__UARTConnection.send(req)
 
     class IR:
-        # def __init__(self):
-        #     pass
+        def __init__(self, name):
+            self.req = ""
+            self.__UARTConnection = uart(name)
+            self.__UARTConnection.open()
 
         def get_distance(self):
             req = CONST.REQUEST['GET_IR_DISTANCE']
@@ -195,6 +199,11 @@ class RobotController:
             return distance
 
     class LED:
+        def __init__(self, name):
+            self.req = ""
+            self.__UARTConnection = uart(name)
+            self.__UARTConnection.open()
+
         def set(self, status=True, red=0, green=255, blue=0):
             if status:
                 req = CONST.COMMAND['LED_ON']
